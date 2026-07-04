@@ -1,9 +1,13 @@
 import streamlit as st
 from google import genai
 
-# Secrets से API Key उठाना
-API_KEY = st.secrets["GEMINI_API_KEY"]
-client = genai.Client(api_key=API_KEY)
+# क्लाइंट को कैश करना ताकि बार-बार रिक्वेस्ट न जाए
+@st.cache_resource
+def get_genai_client():
+    API_KEY = st.secrets["GEMINI_API_KEY"]
+    return genai.Client(api_key=API_KEY)
+
+client = get_genai_client()
 
 st.set_page_config(page_title="SHREE AI", page_icon="📚")
 st.title("📚 SHREE AI")
@@ -29,7 +33,6 @@ if user_question := st.chat_input("अपना सवाल यहाँ टा
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
         try:
-            # स्टेबल मॉडल
             response = client.models.generate_content(
                 model='gemini-2.5-flash',
                 contents=user_question,
@@ -38,6 +41,5 @@ if user_question := st.chat_input("अपना सवाल यहाँ टा
             message_placeholder.markdown(ai_response)
             st.session_state.messages.append({"role": "assistant", "content": ai_response})
         except Exception as e:
-            # यह लाइन हमें बताएगी कि असली समस्या क्या है
             error_msg = f"⚠️ *शिक्षक व्यस्त हैं। (Technical Error: {str(e)})*"
             message_placeholder.markdown(error_msg)
