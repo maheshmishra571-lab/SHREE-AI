@@ -25,11 +25,11 @@ if user_question := st.chat_input("अपना सवाल यहाँ टा
         st.markdown(user_question)
     st.session_state.messages.append({"role": "user", "content": user_question})
 
-    # AI से जवाब जेनरेट करना (एडवांस एरर हैंडलिंग के साथ)
+    # AI से जवाब जेनरेट करना
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
         try:
-            # यहाँ एडवांस प्रो मॉडल सेट है
+            # स्टेबल मॉडल
             response = client.models.generate_content(
                 model='gemini-2.5-flash',
                 contents=user_question,
@@ -38,6 +38,6 @@ if user_question := st.chat_input("अपना सवाल यहाँ टा
             message_placeholder.markdown(ai_response)
             st.session_state.messages.append({"role": "assistant", "content": ai_response})
         except Exception as e:
-            # कोटा खत्म होने पर यह सुंदर मैसेज दिखेगा
-            error_msg = "⚠️ *शिक्षक अभी व्यस्त हैं (कोटा समाप्त)। कृपया 1 मिनट बाद दोबारा प्रयास करें!*"
+            # यह लाइन हमें बताएगी कि असली समस्या क्या है
+            error_msg = f"⚠️ *शिक्षक व्यस्त हैं। (Technical Error: {str(e)})*"
             message_placeholder.markdown(error_msg)
