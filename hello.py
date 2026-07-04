@@ -34,7 +34,7 @@ if user_question := st.chat_input("अपना सवाल यहाँ टा
         message_placeholder = st.empty()
         try:
             response = client.models.generate_content(
-                model='gemini-2.5-flash',
+                model='gemini-2.5-pro',
                 contents=user_question,
             )
             ai_response = response.text
