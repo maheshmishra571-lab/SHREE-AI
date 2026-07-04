@@ -2,7 +2,7 @@ import streamlit as st
 from google import genai
 
 # Secrets से API Key उठाना
-API_KEY = st.secrets["GEMINI_API_KEY"]
+API_KEY = st.secrets["AIzaSyBBRyroI02aSSPSIFOURTVs4M_Ys3zURwo"]
 client = genai.Client(api_key=API_KEY)
 
 st.set_page_config(page_title="SHREE AI", page_icon="📚")
