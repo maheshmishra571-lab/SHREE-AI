@@ -31,7 +31,7 @@ if user_question := st.chat_input("अपना सवाल यहाँ टा
         try:
             # यहाँ एडवांस प्रो मॉडल सेट है
             response = client.models.generate_content(
-                model='gemini-2.5-pro',
+                model='gemini-2.5-flash',
                 contents=user_question,
             )
             ai_response = response.text
